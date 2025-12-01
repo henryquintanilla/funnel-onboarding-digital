@@ -1,0 +1,12 @@
+# Ignorar carpetas de sistema y entorno
+venv/
+.env
+.DS_Store
+__pycache__/
+.ipynb_checkpoints/
+
+# Ignorar DATOS (Simulamos privacidad)
+*.csv
+data/raw/
+data/
+.entorno/

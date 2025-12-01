@@ -85,7 +85,7 @@ if __name__ == "__main__":
     df_final = generate_data(10000)
     
     # Guardar en raw (Simulando la extracción de la BD)
-    output_path = "01_Data/raw/onboarding_ab_test_data.csv"
+    output_path = "data/raw/onboarding_ab_test_data.csv"
     
     # Asegúrate de crear la carpeta data/raw antes de correr esto, o dará error
     try:
