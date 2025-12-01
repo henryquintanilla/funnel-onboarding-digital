@@ -1,30 +1,44 @@
-# 🚀 Optimización de Onboarding Digital: Análisis de Fricción & A/B Testing
+# Optimización de Onboarding Digital: Análisis de Fricción & A/B Testing
 
-## 📌 Contexto del Negocio
-El banco detectó una caída significativa en la conversión de usuarios móviles durante el flujo de alta digital. El objetivo de este proyecto fue analizar el embudo de conversión, identificar puntos de fricción técnicos y evaluar la efectividad de un nuevo flujo simplificado (Variante B) mediante experimentación rigurosa.
+## 1.Contexto del Negocio
+Para entender cómo se comporta un flujo digital, simulé un dataset de 10,000 usuarios que atraviesan por las principales etapas del proceso. La idea fue identificar:
+* En qué pasos se produce mayor fricción,
+* Qué segmentos presentan problemas particulares,
+* Y si una variante del flujo normal (Variante) mejora la conversión frente al grupo original (Control).
 
-## 🔍 Hallazgos Clave
+## 2.Resultados Principales
 
-### 1. La Variante B es indiscutiblemente superior
-El Test A/B demostró un **Lift (incremento) del 11.6%** en la tasa de conversión global respecto al grupo de control.
-* **Validación Estadística:** Chi-Square Test con un *p-value* de `0.00000002`, confirmando que el resultado no es aleatorio (Significancia > 99%).
+### 2.1.Impacto de la Variante (Test A/B)
+La Variante mostró una mejora clara frente al grupo control.
+* **Conversión Control**: 48.6%
+* **Conversión Variante:** 54.2%
+* **Lift (incremento):** +11.6%
+Se aplicó un test de Chi-Cuadrado para validar si la diferencia era producto del azar.
+El p-value obtenido fue de `0.00000002`, suficientemente bajo para rechazar la hipótesis nula y concluir que la Variante genera un impacto real en la conversión.
 
-### 2. Hallazgo Crítico en Android (Fricción Técnica)
-Se identificó una degradación de experiencia severa en dispositivos Android:
-* **Latencia:** Los usuarios de Android tardan **17.95s** en promedio para escanear su DNI, comparado con **11.84s** en iOS (+51% más lento).
-* **Impacto:** Esta fricción correlaciona con un "Drop-off rate" masivo del **~30%** en la transición hacia el escaneo del DNI.
-* **Validación:** T-Test confirmado con *p-value* `0.00000000`.
+### 2.2.Fricción técnica en Android  
+En el evento de "escaneo del DNI" se observa una diferencia significativa por tipo de dispositivo:
+* **Tiempo promedio Android:** 17.95s
+* **Tiempo promedio iOS:** 11.84s
+Se aplicó el T-test para comparar las medias entre ambos grupos, siendo el p-value cercano a 0, lo que confirma que la diferencia no es aleatoria: Android tiene un problema técnico evidenciado.
 
-## 🛠️ Stack Tecnológico
-* **Python:** Generación de datos sintéticos y lógica de negocio.
-* **Pandas:** Limpieza de datos, ingeniería de variables y análisis de embudo (Funnel Analysis).
+### 2.3.Evento crítico del funnel
+La mayor caída en el funnel ocurre en la transición de "Información Personal" a "Escaneo de DNI", con una caída cercana al 30%:
+* **Caída en SO Android:** 31.35%
+* **Caída en SO iOS:** 26.43%
+Este evento se convierte en un cuello de botella que concentra la mayor pérdida de usuarios antes de la verificación de identidad.
+
+## 3.Stack Tecnológico
+* **Python:** Para la simulación de datos y manipulación en general.
+* **Pandas:** Para análisis del funnel y cálculos de conversión.
 * **Scipy:** Pruebas de hipótesis estadísticas (Chi-Square & T-Test).
 
-## 📂 Estructura del Proyecto
+## 4.Estructura del Proyecto
 * `src/data_gen.py`: Script de generación de datos que simula 10,000 usuarios con patrones de comportamiento y sesgos técnicos.
-* `notebooks/`: Análisis exploratorio (EDA) y validación estadística detallada.
+* `notebooks/`: Análisis exploratorio (EDA), construcción del funnel y validación estadística.
 
-## 🚀 Recomendación Estratégica
-1.  **Roll-out:** Desplegar la Variante B al 100% de la base de usuarios inmediatamente.
-2.  **Ingeniería:** Abrir ticket prioritario para optimizar la librería de visión por computador en la versión Android (objetivo: reducir latencia a <12s).
+## 5.Recomendación Estratégica
+1.  **Roll-out:** Desplegar la Variante dado el incremento consistente y validado de la conversión.
+2.  **Ingeniería:** Revisar el módulo de escaneo en Android, ya que el tiempo adicional demuestra un problema técnico que podría afectar la experiencia.
 3.  **Marketing:** Pausar temporalmente la inversión de pauta pagada (Ads) dirigida a dispositivos Android hasta corregir el bug para evitar desperdicio de presupuesto (CAC ineficiente).
+4. **UX/UI:** Auditar la usabilidad del evento de "Información Personal". Se puede revisar los campos obligatorios, autocompletado y validaciones para reducir fricción antes del escaneo del DNI.
